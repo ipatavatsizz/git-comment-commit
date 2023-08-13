@@ -72,10 +72,13 @@ let commitProgress = async (
     },
     async (progress, token) => {
       return new Promise<void>(async (resolve, reject) => {
-        setTimeout(() => {
-          progress.report({ message: 'Committing active file', increment: 50 });
+        setTimeout(async () => {
+          progress.report({ message: 'Adding file', increment: 30 });
+          await git.add(event.document.uri.fsPath);
         }, 1500);
-
+        setTimeout(() => {
+          progress.report({ message: 'Committing comment', increment: 60 });
+        }, 3000);
         let response = await git
           .add(event.document.uri.fsPath)
           .commit(comment.length > 0 ? comment : 'Uncommitted changes');
