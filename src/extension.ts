@@ -1,6 +1,6 @@
 // commit: test commit of plugin
-// TODO: save last comment for input save for fast committing.
 
+// TODO: save last comment for input save for fast committing.
 
 import * as simpleGit from 'simple-git';
 import * as vscode from 'vscode';
