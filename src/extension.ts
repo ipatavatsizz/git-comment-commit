@@ -72,7 +72,7 @@ let commitProgress = async (
     },
     async (progress, token) => {
       return new Promise<void>(async (resolve, reject) => {
-        progress.report({ message: 'Committing active file', increment: 30 });
+        progress.report({ message: 'Committing active file', increment: 50 });
 
         let response = await git
           .add(event.document.uri.fsPath)
@@ -83,6 +83,8 @@ let commitProgress = async (
             message: `Successfully committed to ${response.branch} #${response.commit}`,
             increment: 60,
           });
+
+          resolve();
 
           progress.report({ increment: 100 });
           resolve();
