@@ -27,9 +27,8 @@ There are currently no issues reported.
 
 ## Release Notes
 
-* d - Dev
-
-- r - Release
+- d -> dev
+- r -> release
 
 ### 1.0.1 (d)
 
