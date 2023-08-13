@@ -79,24 +79,23 @@ let commitProgress = async (
 
         setTimeout(() => {
           progress.report({ message: 'Committing comment', increment: 60 });
-          
-          let response = await git
+        }, 3000);
+
+        let response = await git
           .add(event.document.uri.fsPath)
           .commit(comment.length > 0 ? comment : 'Uncommitted changes');
-          
-          if (response) {
-            setTimeout(() => {
-              progress.report({
-                message: `Successfully committed to ${response.branch} #${response.commit}`,
-                increment: 100,
-              });
-            }, 3000);
-          
-            setTimeout(() => {
-              resolve();
-            }, 5000);
-          }
-        }, 3000);
+
+        if (response) {
+          setTimeout(() => {
+            progress.report({
+              message: `Successfully committed to ${response.branch} #${response.commit}`,
+              increment: 100,
+            });
+          }, 3000);
+
+          setTimeout(() => {
+            resolve();
+          }, 5000);
         } else {
           setTimeout(() => {
             reject();
