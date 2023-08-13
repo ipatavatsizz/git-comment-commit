@@ -17,7 +17,7 @@ Git-Comment-Commit extension allows you to easily comment per file commits.
 This extension contributes the following settings:
 
 * `git-comment-commit.showGitRepo`: `true` - show git uri notification when found.
-* `git-comment-commit.useLastComments`: `true` - use last stored comment for input mode (this fasten comment process)
+* `git-comment-commit.useLastComment`: `true` - use automatically last comment for input mode
 
 ## Known Issues
 
@@ -27,11 +27,15 @@ There are currently no issues reported.
 
 ## Release Notes
 
-### 1.0.1
+> D - Dev
+
+> R - Release
+
+### 1.0.1-d
 
 * Settings interactions implemented
 
-### 1.0.0
+### 1.0.0-r
 
 Initial release of git-comment-commit extension with following features.
 
