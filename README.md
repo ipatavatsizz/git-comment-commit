@@ -27,6 +27,10 @@ There are currently no issues reported.
 
 ## Release Notes
 
+### 1.0.1
+
+* Settings interactions implemented
+
 ### 1.0.0
 
 Initial release of git-comment-commit extension with following features.
