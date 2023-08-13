@@ -88,10 +88,16 @@ let commitProgress = async (
             });
           }, 3000);
 
-          resolve();
+          setTimeout(() => {
+            resolve();
+          }, 5000);
         } else {
-          reject();
-          vscode.window.showErrorMessage(`Encountered unexpected Git error.`);
+          setTimeout(() => {
+            reject();
+            progress.report({
+              message: `Couldn't commit changes. \nFor more information see extension output.`,
+            });
+          }, 3000);
           vsConsole.appendLine(
             'This error can be occured from git.add or git.commit methods. The reason can be authentication, initialization or unknown problems.'
           );
