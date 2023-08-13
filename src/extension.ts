@@ -85,16 +85,17 @@ let commitProgress = async (
           .commit(comment.length > 0 ? comment : 'Uncommitted changes');
           
           if (response) {
-          setTimeout(() => {
-            progress.report({
-              message: `Successfully committed to ${response.branch} #${response.commit}`,
-              increment: 100,
-            });
-          }, 3000);
+            setTimeout(() => {
+              progress.report({
+                message: `Successfully committed to ${response.branch} #${response.commit}`,
+                increment: 100,
+              });
+            }, 3000);
           
-          setTimeout(() => {
-            resolve();
-          }, 5000);
+            setTimeout(() => {
+              resolve();
+            }, 5000);
+          }
         }, 3000);
         } else {
           setTimeout(() => {
