@@ -27,15 +27,14 @@ There are currently no issues reported.
 
 ## Release Notes
 
-> D - Dev
+> d - Dev
+> r - Release
 
-> R - Release
-
-### 1.0.1-d
+### 1.0.1 (d)
 
 * Settings interactions implemented
 
-### 1.0.0-r
+### 1.0.0 (r)
 
 Initial release of git-comment-commit extension with following features.
 
