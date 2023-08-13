@@ -68,7 +68,7 @@ let commitProgress = async (
     {
       location: vscode.ProgressLocation.Notification,
       cancellable: true,
-      title: 'Git-Comment-Commit',
+      title: 'Committing comment',
     },
     async (progress, token) => {
       return new Promise<void>(async (resolve, reject) => {
