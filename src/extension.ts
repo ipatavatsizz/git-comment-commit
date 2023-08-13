@@ -81,9 +81,9 @@ let commitProgress = async (
           progress.report({ message: 'Committing comment', increment: 60 });
         }, 3000);
 
-        let response = await git
-          .add(event.document.uri.fsPath)
-          .commit(comment.length > 0 ? comment : 'Uncommitted changes');
+        let response = await git.commit(
+          comment.length > 0 ? comment : 'Uncommitted changes'
+        );
 
         if (response) {
           setTimeout(() => {
