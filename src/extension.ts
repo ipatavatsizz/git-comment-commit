@@ -82,11 +82,10 @@ let commitProgress = async (
           setTimeout(() => {
             progress.report({
               message: `Successfully committed to ${response.branch} #${response.commit}`,
-              increment: 60,
+              increment: 100,
             });
-          }, 2000);
+          }, 3000);
 
-          progress.report({ increment: 100 });
           resolve();
         } else {
           reject();
