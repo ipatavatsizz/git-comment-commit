@@ -28,10 +28,25 @@
   "contributes": {
     "commands": [
       {
-        "command": "git-comment-commit.gitCommentCommit",
+        "command": "git-comment-commit.commentCommit",
         "title": "Git Comment Commit"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Git-Comment-Commit",
+      "properties": {
+        "git-comment-commit.showGitRepo": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Git uri when detected."
+        },
+        "git-comment-commit.useLastComment": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use last comment automatically."
+        }
+      }
+    }
   },
   "extensionDependencies": [
     "vscode.git"
