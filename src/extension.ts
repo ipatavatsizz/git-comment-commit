@@ -4,9 +4,11 @@
 import * as vscode from 'vscode';
 import { GitCommentCommit } from './GitCommentCommit';
 
+let extension: GitCommentCommit | undefined;
 export async function activate(context: vscode.ExtensionContext) {
-  let extension = new GitCommentCommit(context);
-  extension.init();
+  extension = new GitCommentCommit(context);
 }
 
-export function deactivate() {}
+export async function deactivate(context: vscode.ExtensionContext) {
+  await extension?.deactivate();
+}
