@@ -1,5 +1,6 @@
 import simpleGit, { CommitResult, SimpleGit } from 'simple-git';
 import * as vscode from 'vscode';
+import { ExtensionSettings } from './GitExtensionSettings';
 import { ExtensionStorage } from './GitExtensionStorage';
 
 export class GitCommentCommit {
@@ -11,6 +12,37 @@ export class GitCommentCommit {
   editor: vscode.TextEditor | undefined;
   isCommitting: boolean = false;
   console: vscode.OutputChannel;
+  active: boolean = false;
+
+  async deactivate() {
+    this.active = false;
+    this.context.subscriptions.forEach((sub) => sub.dispose());
+    let message = `${this.context.subscriptions.length} subscriptions deleted, extension is now deactivated.`;
+    this.context.subscriptions.length = 0;
+    vscode.window.showInformationMessage(
+      'GitCommentCommit is now deactivated.'
+    );
+
+    console.info(message);
+    this.console.appendLine(message);
+  }
+  async activate() {
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+    if (workspaceFolders) {
+      this.active = true;
+      this.workspace = workspaceFolders.at(0);
+      this.git = simpleGit(this.workspace!.uri.fsPath);
+      let init = await this.git.init();
+
+      if (ExtensionSettings.showGitRepo) {
+        vscode.window.showInformationMessage(`Git: ${init.gitDir}`);
+      }
+
+      let message = `${this.context.subscriptions.length} subscriptions registered, extension is now activated.`;
+      this.console.appendLine(message);
+      console.log(message);
+    }
+  }
 
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
@@ -23,6 +55,8 @@ export class GitCommentCommit {
 
     this.context.subscriptions.push(this.onDidChangeActiveTextEditor);
     this.context.subscriptions.push(this.onWillSaveTextDocument);
+
+    this.activate();
   }
 
   onDidChangeActiveTextEditor = vscode.window.onDidChangeActiveTextEditor(
@@ -39,22 +73,32 @@ export class GitCommentCommit {
           'There is currently active process! Please wait soon.'
         );
       } else {
-        await this.analyze();
+        if (await this.isWorkspaceFile(this.document?.uri!)) {
+          await this.analyze();
+          return;
+        }
+        this.console.appendLine(
+          `The file does not inside workspace. Skipping process`
+        );
       }
     }
   );
 
-  async init(): Promise<void> {
-    const workspaceFolders = vscode.workspace.workspaceFolders;
-    if (workspaceFolders) {
-      this.workspace = workspaceFolders.at(0);
-      this.git = simpleGit(this.workspace!.uri.fsPath);
-      let init = await this.git.init();
-      vscode.window.showInformationMessage(`Git: ${init.gitDir}`);
+  async isWorkspaceFile(uri: vscode.Uri): Promise<boolean> {
+    let getFiles = await vscode.workspace.findFiles(
+      '**/*.*',
+      undefined,
+      undefined,
+      undefined
+    );
+    if (getFiles.find((file) => file.fsPath === uri.fsPath)) {
+      return true;
     }
+    return false;
   }
+
   async analyze(): Promise<void> {
-    let comment = await this.getComment();
+    let comment = await this.getComment(false);
     if (comment) {
       await this.commentMode();
     } else {
@@ -68,13 +112,14 @@ export class GitCommentCommit {
   async inputMode(): Promise<void> {
     let comment = await vscode.window.showInputBox({
       placeHolder: 'Comment to commit',
+      value: ExtensionSettings.useLastComment ? await this.getComment() : '',
     });
 
     if (comment) {
       await this.commit(comment);
     }
   }
-  async commit(message: string | 'Uncommitted changes'): Promise<void> {
+  async commit(message: string): Promise<void> {
     await vscode.window.withProgress<void>(
       {
         location: vscode.ProgressLocation.Notification,
@@ -83,6 +128,10 @@ export class GitCommentCommit {
       },
       async (progress, token) => {
         return new Promise<void>(async (resolve, reject) => {
+          if (ExtensionSettings.useLastComment) {
+            await this.saveComment(message);
+          }
+
           token.onCancellationRequested(() => {
             this.console.appendLine(`Commit process cancelled at ${stage}/3`);
             progress.report({ message: 'Progress cancelled.' });
@@ -113,7 +162,7 @@ export class GitCommentCommit {
                 }, 2000);
               }
             });
-          }, 1000);
+          }, 500);
 
           setTimeout(async () => {
             stage++;
@@ -131,7 +180,7 @@ export class GitCommentCommit {
                   console.error(error);
                   this.console.appendLine(error.message);
                   progress.report({
-                    message: `An unexpected error occured at git.commit.\nCheck the details in extension logs.`,
+                    message: `Could not commit successfully.\nCheck the details in extension logs.`,
                   });
                   setTimeout(() => {
                     reject();
@@ -139,15 +188,14 @@ export class GitCommentCommit {
                 }
               }
             );
-          }, 2000);
+          }, 1500);
 
           setTimeout(async () => {
             if (commit) {
-              console.dir(commit);
               stage++;
               progress.report({
                 increment: 100,
-                message: `File successfully committed to ${
+                message: `Successfully committed to ${
                   commit.branch ? commit.branch : 'commit.branch'
                 } #${commit.commit ? commit.commit : 'commit.id'} - ${stage}/3`,
               });
@@ -156,32 +204,27 @@ export class GitCommentCommit {
             setTimeout(() => {
               return resolve();
             }, 1500);
-          }, 3000);
+          }, 2500);
         });
       }
     );
   }
-  async getComment(): Promise<string | undefined> {
+  async getComment(useLastComment = true): Promise<string | undefined> {
     if (this.document) {
       let match = this.document
         .lineAt(0)
         .text.match(/^\/\/\s*commit:\s*(.*)$/i);
       if (match && match[1]) {
         return match[1];
+      } else {
+        if (useLastComment) {
+          return await this.context.globalState.get(this.document.uri.fsPath);
+        }
       }
     }
     return undefined;
   }
+  async saveComment(comment: string) {
+    await this.context.globalState.update(this.document?.uri.fsPath!, comment);
+  }
 }
-
-// let saveLastComment = async (path: string, comment: string) => {
-//   await context.globalState.update(path, comment);
-// };
-
-// let getLastComment = async (path: string): Promise<string> => {
-//   let comment = await context.globalState.get<string>(path);
-//   if (comment) {
-//     return comment;
-//   }
-//   return '';
-// };
