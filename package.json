@@ -26,14 +26,8 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "git-comment-commit.commentCommit",
-        "title": "Git Comment Commit"
-      }
-    ],
     "configuration": {
-      "title": "Git-Comment-Commit",
+      "title": "Git Comment Commit",
       "properties": {
         "git-comment-commit.showGitRepo": {
           "type": "boolean",
@@ -43,7 +37,7 @@
         "git-comment-commit.useLastComment": {
           "type": "boolean",
           "default": true,
-          "description": "Use last comment automatically."
+          "description": "Use last comments automatically."
         }
       }
     }
