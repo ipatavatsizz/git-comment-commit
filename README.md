@@ -1,16 +1,17 @@
-# git-comment-commit
+# Git Comment Commit
 
-Git-Comment-Commit extension allows you to easily comment per file commits. 
+Git Comment Commit allows you to easily commit per file commits.
+
+> This extension only handles adding and committing files but not pushing.
 
 ## Features
 
-- Input commit when save
-- Comment commit when save
+- Find comment and save to fasten committing per file
+- Input and Comment commit types
 
-> Tip: When auto save enabled, we recommend comment committing option.
 ## Requirements
 
-> This extension uses simpleGit to access git. You do not need to any specific configuration.
+> This extension uses simpleGit automatically to access git. You do not need to any specific configuration.
 
 ## Extension Settings
 
@@ -21,7 +22,7 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-You can send issue at Github: [issues](https://github.com/iPatavatsizz/git-comment-commit/issues)
+If you have encountered any issues/bugs or anything, please report us at to fix Github: [issues](https://github.com/iPatavatsizz/git-comment-commit/issues)
 
 There are currently no issues reported.
 
@@ -31,10 +32,10 @@ There are currently no issues reported.
 
 ### 1.0.1 (d)
 
-* Settings interactions implemented (not yet)
+* Settings interactions implemented
+* Added auto comment saving per file
 * Switched from `vscode.window.showInformationMessage` to `vscode.window.withProgress` for better notify.
-* Added auto comment saving per file (not yet)
-* Extension has rewritten in terms of beauty
+* Extension has rewritten
 
 ### 1.0.0 (r)
 
