@@ -107,7 +107,24 @@ export class GitCommentCommit {
   }
   async commentMode(): Promise<void> {
     let comment = await this.getComment();
-    await this.commit(comment!);
+    if (comment) {
+      await this.deleteComment();
+      await this.commit(comment!);
+      // await this.insertComment();
+    }
+  }
+  async insertComment(): Promise<void> {
+    let comment = await this.getComment(true, true);
+    if (comment) {
+      this.editor?.edit((builder) => {
+        builder.insert(this.document?.lineAt(0).range.start!, `${comment!}\n`);
+      });
+    }
+  }
+  async deleteComment(): Promise<void> {
+    this.editor?.edit((builder) => {
+      builder.delete(this.document?.lineAt(0).rangeIncludingLineBreak!);
+    });
   }
   async inputMode(): Promise<void> {
     let comment = await vscode.window.showInputBox({
@@ -209,15 +226,21 @@ export class GitCommentCommit {
       }
     );
   }
-  async getComment(useLastComment = true): Promise<string | undefined> {
+  async getComment(useLastComment = true, fullComment = false): Promise<string | undefined> {
     if (this.document) {
       let match = this.document
-        .lineAt(0)
-        .text.match(/^\/\/\s*commit:\s*(.*)$/i);
+      .lineAt(0)
+      .text.match(/^\/\/\s*commit:\s*(.*)$/i);
       if (match && match[1]) {
+        if (fullComment) {
+          return match[0];
+        }
         return match[1];
       } else {
         if (useLastComment) {
+          if (fullComment) {
+            return `// commit: ${await this.context.globalState.get(this.document.uri.fsPath)}`;
+          }
           return await this.context.globalState.get(this.document.uri.fsPath);
         }
       }
