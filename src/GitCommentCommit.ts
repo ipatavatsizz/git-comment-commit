@@ -232,7 +232,7 @@ export class GitCommentCommit {
     if (this.document) {
       let match = this.document
       .lineAt(0)
-      .text.match(/^\/\/\s*commit:\s*(.*)$/i);
+      .text.match(/\s*commit:\s*(.*)$/i);
       if (match && match[1]) {
         if (fullComment) {
           return match[0];
