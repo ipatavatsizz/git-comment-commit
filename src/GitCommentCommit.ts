@@ -1,3 +1,5 @@
+// commit: file specific commit easily!
+
 import simpleGit, { CommitResult, SimpleGit } from 'simple-git';
 import * as vscode from 'vscode';
 import { ExtensionSettings } from './GitExtensionSettings';
@@ -27,6 +29,10 @@ export class GitCommentCommit {
     this.console.appendLine(message);
   }
   async activate() {
+    if (await ExtensionUtils.isBrowser()) {
+      vscode.window.showInformationMessage('We are truly sorry! This extension cannot work on web.');
+      return;
+    }
     const workspaceFolders = vscode.workspace.workspaceFolders;
     if (workspaceFolders) {
       this.active = true;
