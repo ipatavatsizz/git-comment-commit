@@ -10,8 +10,8 @@ Git Comment Commit allows users to specify file specific commits using comment
 
 - This extension will only run when a existing Git repository found
 
-![How to use? - Comment Mode](images/extension-commentmode.png)
-![How to use? - Input Mode](images/extension-inputmode.png)
+![How to use? - Comment Mode](https://github.com/iPatavatsizz/git-comment-commit/blob/dev/images/extension-commentmode.png?raw=true)
+![How to use? - Input Mode](https://github.com/iPatavatsizz/git-comment-commit/blob/dev/images/extension-inputmode.png?raw=true)
 
 ## Features
 
