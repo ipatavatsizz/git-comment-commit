@@ -1,3 +1,4 @@
+import { platform } from 'os';
 import simpleGit, { CommitResult, SimpleGit } from 'simple-git';
 import * as vscode from 'vscode';
 import { ExtensionSettings } from './GitExtensionSettings';
@@ -56,6 +57,8 @@ export class GitCommentCommit {
     this.context.subscriptions.push(this.onDidChangeActiveTextEditor);
     this.context.subscriptions.push(this.onWillSaveTextDocument);
 
+    console.log(platform());
+    console.log(process.platform);
     this.activate();
   }
 
