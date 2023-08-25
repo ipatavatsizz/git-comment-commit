@@ -4,6 +4,7 @@ import simpleGit, { CommitResult, SimpleGit } from 'simple-git';
 import * as vscode from 'vscode';
 import { ExtensionSettings } from './GitExtensionSettings';
 import { ExtensionStorage } from './GitExtensionStorage';
+import { ExtensionUtils } from './utils';
 
 export class GitCommentCommit {
   storage: ExtensionStorage;
@@ -114,25 +115,8 @@ export class GitCommentCommit {
   async commentMode(): Promise<void> {
     let comment = await this.getComment();
     if (comment) {
-      if (ExtensionSettings.removeComment) {
-        await this.deleteComment();
-      }
       await this.commit(comment!);
-      // await this.insertComment();
     }
-  }
-  async insertComment(): Promise<void> {
-    let comment = await this.getComment(true, true);
-    if (comment) {
-      this.editor?.edit((builder) => {
-        builder.insert(this.document?.lineAt(0).range.start!, `${comment!}\n`);
-      });
-    }
-  }
-  async deleteComment(): Promise<void> {
-    this.editor?.edit((builder) => {
-      builder.delete(this.document?.lineAt(0).rangeIncludingLineBreak!);
-    });
   }
   async inputMode(): Promise<void> {
     let comment = await vscode.window.showInputBox({
