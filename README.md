@@ -13,8 +13,9 @@ Git Comment Commit allows users to specify file specific commits using comment
 
 This extension contributes the following settings:
 
-- `git-comment-commit.showGitRepo`: `true` - Show git uri notification when found.
-- `git-comment-commit.useLastComment`: `true` - Use automatically last comment for input mode
+- `git-comment-commit.showGitRepo`: `true` - Show a git notification if exists
+- `git-comment-commit.useLastComment`: `true` - Use last comment for input mode
+- `git-comment-commit.removeComment`: `true` - Remove comment in document
 
 > Changes may require restart to apply
 
@@ -30,7 +31,7 @@ There are currently no issues related to working properly.
 
 ### 1.0.2 (d)
 
-> No further feature planned yet.
+- Enhanced auto remove comment feature (added in v1.0.1)
 
 ### 1.0.1 (r)
 
