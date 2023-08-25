@@ -43,11 +43,6 @@
           "type": "boolean",
           "default": true,
           "description": "Use last comments automatically."
-        },
-        "git-comment-commit.removeComment": {
-          "type": "boolean",
-          "default": true,
-          "description": "Remove comment automatically."
         }
       }
     }
