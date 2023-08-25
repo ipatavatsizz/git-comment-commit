@@ -3,16 +3,19 @@
   "displayName": "Git Comment Commit",
   "description": "Git Comment Commit allows user to specify file specific commit using comment",
   "version": "1.0.1",
+  "publisher": "ipatavatsizz",
+  "icon": "images/icon.png",
+  "repository": {
+    "url": "https://github.com/iPatavatsizz/git-comment-commit",
+    "type": "git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/iPatavatsizz/git-comment-commit/blob/main/README.md",
   "author": {
     "name": "iPatavatsizz",
     "url": "https://github.com/iPatavatsizz",
     "email": "ankatryusuf@hotmail.com"
   },
-  "publisher": "ipatavatsizz",
-  "icon": "images/icon.png",
-  "repository": {"url": "https://github.com/iPatavatsizz/git-comment-commit", "type": "git"},
-  "license": "SEE LICENSE IN LICENSE.TXT",
-  "homepage": "https://github.com/iPatavatsizz/git-comment-commit/blob/main/README.md",
   "bugs": {
     "url": "https://github.com/iPatavatsizz/git-comment-commit/issues",
     "email": "ankatryusuf@hotmail.com"
