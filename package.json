@@ -2,14 +2,16 @@
   "name": "git-comment-commit",
   "displayName": "Git Comment Commit",
   "description": "Git Comment Commit allows user to specify file specific commit using comment",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "iPatavatsizz",
     "url": "https://github.com/iPatavatsizz",
     "email": "ankatryusuf@hotmail.com"
   },
-  "publisher": "iPatavatsizz",
+  "publisher": "ipatavatsizz",
+  "icon": "images/icon.png",
   "repository": {"url": "https://github.com/iPatavatsizz/git-comment-commit", "type": "git"},
+  "license": "SEE LICENSE IN LICENSE.TXT",
   "homepage": "https://github.com/iPatavatsizz/git-comment-commit/blob/main/README.md",
   "bugs": {
     "url": "https://github.com/iPatavatsizz/git-comment-commit/issues",
@@ -26,16 +28,22 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "git-comment-commit.gitCommentCommit",
-        "title": "Git Comment Commit"
+    "configuration": {
+      "title": "Git Comment Commit",
+      "properties": {
+        "git-comment-commit.showGitRepo": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Git uri when detected."
+        },
+        "git-comment-commit.useLastComment": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use last comments automatically."
+        }
       }
-    ]
+    }
   },
-  "extensionDependencies": [
-    "vscode.git"
-  ],
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
