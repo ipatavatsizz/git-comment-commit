@@ -62,6 +62,8 @@ export class GitCommentCommit {
     this.context.subscriptions.push(this.onDidChangeActiveTextEditor);
     this.context.subscriptions.push(this.onWillSaveTextDocument);
 
+    console.log(platform());
+    console.log(process.platform);
     this.activate();
   }
 
