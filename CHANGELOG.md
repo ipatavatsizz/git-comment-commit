@@ -4,7 +4,13 @@ All notable changes to the "git-comment-commit" extension will be documented in 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [1.0.2]
+## [2.1.1]
+
+### Changed
+
+- Switched transparent icon
+
+## [2.1.0]
 
 ### Added
 
@@ -13,8 +19,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Changed
 
 - Extension icons changed
+- Extension can now find comment anywhere
 
-## [1.0.1] - 2023-08-15
+## [2.0.0] - 2023-08-15
 
 ### Added
 
