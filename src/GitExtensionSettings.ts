@@ -4,6 +4,7 @@ export class ExtensionSettings {
   static readonly configuration =
     vscode.workspace.getConfiguration('git-comment-commit');
 
-  static readonly showGitRepo = this.configuration.get('showGitRepo');
-  static readonly useLastComment = this.configuration.get('useLastComment');
+  static readonly showGitRepo = this.configuration.get<boolean>('showGitRepo');
+  static readonly useLastComment = this.configuration.get<boolean>('useLastComment');
+  static readonly removeComment = this.configuration.get<boolean>('removeComment');
 }
