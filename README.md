@@ -32,6 +32,7 @@ There are currently no issues related to working properly.
 ### 1.0.2 (d)
 
 - Enhanced auto remove comment feature (added in v1.0.1)
+- Extension icons changed
 
 ### 1.0.1 (r)
 

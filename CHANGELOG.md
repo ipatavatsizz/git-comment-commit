@@ -13,6 +13,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Changed
 
 - Enhanced auto remove comment feature (added in v1.0.1)
+- Extension icons changed
 
 ## [1.0.1] - 2023-08-15
 
