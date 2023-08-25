@@ -1,11 +1,8 @@
-// commit: file specific commit easily!
-
 import simpleGit, { CommitResult, SimpleGit } from 'simple-git';
 import * as vscode from 'vscode';
 import { ExtensionSettings } from './GitExtensionSettings';
 import { ExtensionStorage } from './GitExtensionStorage';
 import { ExtensionUtils } from './utils';
-
 export class GitCommentCommit {
   storage: ExtensionStorage;
   git: SimpleGit | undefined;
@@ -22,9 +19,7 @@ export class GitCommentCommit {
     this.context.subscriptions.forEach((sub) => sub.dispose());
     let message = `${this.context.subscriptions.length} subscriptions deleted, extension is now deactivated.`;
     this.context.subscriptions.length = 0;
-    vscode.window.showInformationMessage(
-      'GitCommentCommit is now deactivated.'
-    );
+    vscode.window.showInformationMessage('GitCommentCommit is now deactivated.');
 
     console.info(message);
     this.console.appendLine(message);
@@ -56,9 +51,7 @@ export class GitCommentCommit {
     this.storage = new ExtensionStorage(context);
     this.editor = vscode.window.activeTextEditor;
     this.document = this.editor?.document;
-    this.console = vscode.window.createOutputChannel(
-      this.context.extension.packageJSON.displayName
-    );
+    this.console = vscode.window.createOutputChannel(this.context.extension.packageJSON.displayName);
 
     this.context.subscriptions.push(this.onDidChangeActiveTextEditor);
     this.context.subscriptions.push(this.onWillSaveTextDocument);
@@ -66,38 +59,25 @@ export class GitCommentCommit {
     this.activate();
   }
 
-  onDidChangeActiveTextEditor = vscode.window.onDidChangeActiveTextEditor(
-    async (editor) => {
-      this.editor = editor;
-      this.document = editor?.document;
-    }
-  );
-  onWillSaveTextDocument = vscode.workspace.onWillSaveTextDocument(
-    async (event) => {
-      this.document = event.document;
-      if (this.isCommitting) {
-        vscode.window.showErrorMessage(
-          'There is currently active process! Please wait soon.'
-        );
-      } else {
-        if (await this.isWorkspaceFile(this.document?.uri!)) {
-          await this.analyze();
-          return;
-        }
-        this.console.appendLine(
-          `The file does not inside workspace. Skipping process`
-        );
+  onDidChangeActiveTextEditor = vscode.window.onDidChangeActiveTextEditor(async (editor) => {
+    this.editor = editor;
+    this.document = editor?.document;
+  });
+  onWillSaveTextDocument = vscode.workspace.onWillSaveTextDocument(async (event) => {
+    this.document = event.document;
+    if (this.isCommitting) {
+      vscode.window.showErrorMessage('There is currently active process! Please wait soon.');
+    } else {
+      if (await this.isWorkspaceFile(this.document?.uri!)) {
+        await this.analyze();
+        return;
       }
+      this.console.appendLine(`The file does not inside workspace. Skipping process`);
     }
-  );
+  });
 
   async isWorkspaceFile(uri: vscode.Uri): Promise<boolean> {
-    let getFiles = await vscode.workspace.findFiles(
-      '**/*.*',
-      undefined,
-      undefined,
-      undefined
-    );
+    let getFiles = await vscode.workspace.findFiles('**/*.*', undefined, undefined, undefined);
     if (getFiles.find((file) => file.fsPath === uri.fsPath)) {
       return true;
     }
@@ -121,7 +101,7 @@ export class GitCommentCommit {
   async inputMode(): Promise<void> {
     let comment = await vscode.window.showInputBox({
       placeHolder: 'Comment to commit',
-      value: ExtensionSettings.useLastComment ? await this.getComment() : '',
+      value: ExtensionSettings.useLastComment ? await this.getComment() : `Update ${this.document?.fileName}`,
     });
 
     if (comment) {
@@ -204,9 +184,9 @@ export class GitCommentCommit {
               stage++;
               progress.report({
                 increment: 100,
-                message: `Successfully committed to ${
-                  commit.branch ? commit.branch : 'commit.branch'
-                } #${commit.commit ? commit.commit : 'commit.id'} - ${stage}/3`,
+                message: `Successfully committed to ${commit.branch ? commit.branch : 'commit.branch'} #${
+                  commit.commit ? commit.commit : 'commit.id'
+                } - ${stage}/3`,
               });
             }
             this.isCommitting = false;
@@ -220,24 +200,26 @@ export class GitCommentCommit {
   }
   async getComment(useLastComment = true, fullComment = false): Promise<string | undefined> {
     if (this.document) {
-      let match = this.document
-      .lineAt(0)
-      .text.match(/\s*commit:\s*(.*)$/i);
-      if (match && match[1]) {
-        if (fullComment) {
-          return match[0];
-        }
-        return match[1];
-      } else {
-        if (useLastComment) {
+      for (let index = 0; index < this.document.lineCount; index++) {
+        const line = this.document.lineAt(index);
+        let match = line.text.match(/\s*commit:\s*(.*)$/i);
+
+        if (match && match[1]) {
           if (fullComment) {
-            return `// commit: ${await this.context.globalState.get(this.document.uri.fsPath)}`;
+            return match[0];
           }
-          return await this.context.globalState.get(this.document.uri.fsPath);
+          return match[1];
+        } else {
+          if (useLastComment) {
+            if (fullComment) {
+              return `// commit: ${await this.context.globalState.get(this.document.uri.fsPath)}`;
+            }
+            return await this.context.globalState.get(this.document.uri.fsPath);
+          }
         }
       }
+      return undefined;
     }
-    return undefined;
   }
   async saveComment(comment: string) {
     await this.context.globalState.update(this.document?.uri.fsPath!, comment);
