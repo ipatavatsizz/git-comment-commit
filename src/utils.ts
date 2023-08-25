@@ -1,4 +1,4 @@
-class ExtensionUtils {
+export class ExtensionUtils {
   static async isBrowser(): Promise<boolean> {
     if (typeof process === 'object') {
       return false;
