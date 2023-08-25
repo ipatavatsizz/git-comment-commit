@@ -1,13 +1,13 @@
 # Git Comment Commit
 
-Git Comment Commit allows you to easily commit per file commits.
+Git Comment Commit allows users to specify file specific commits using comment
 
-> This extension only handles adding and committing files but doesn't push
+> This extension only manages to add and commit files but not push
 
 ## Features
 
-- Find comment and save to fasten committing per file
-- Input and Comment commit types
+- Auto comment save to fast commit
+- Two different commit modes, Input&Comment
 
 ## Extension Settings
 
@@ -16,7 +16,7 @@ This extension contributes the following settings:
 - `git-comment-commit.showGitRepo`: `true` - Show git uri notification when found.
 - `git-comment-commit.useLastComment`: `true` - Use automatically last comment for input mode
 
-> May require restart
+> Changes may require restart to apply
 
 ## Known Issues
 
