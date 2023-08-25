@@ -4,6 +4,15 @@ Git Comment Commit allows users to specify file specific commits using comment
 
 > This extension only manages to add and commit files but not push
 
+## How to use?
+
+> Use `commit: commit message` syntax in a commentable language or just save the file to switch input mode.
+
+- This extension will only run when a existing Git repository found
+
+![How to use? - Comment Mode](images/extension-commentmode.png)
+![How to use? - Input Mode](images/extension-inputmode.png)
+
 ## Features
 
 - Auto comment save to fast commit
@@ -15,7 +24,6 @@ This extension contributes the following settings:
 
 - `git-comment-commit.showGitRepo`: `true` - Show a git notification if exists
 - `git-comment-commit.useLastComment`: `true` - Use last comment for input mode
-- `git-comment-commit.removeComment`: `true` - Remove comment in document
 
 > Changes may require restart to apply
 
@@ -29,11 +37,16 @@ There are currently no issues related to working properly.
 
 - For seeing upcoming and planned features, please refer to [dev channel](https://github.com/iPatavatsizz/git-comment-commit/tree/dev)
 
-### 1.0.2 (d)
+### 2.1.1 (d)
 
 - Extension icons changed
 
-### 1.0.1 (r)
+### 2.1.0 (r)
+
+- Extension can now find comment anywhere
+- (Semantic Versioning rules followed)
+
+### 2.0.0 (r)
 
 - Settings interactions implemented
 - Added auto comment saving per file
