@@ -1,5 +1,3 @@
-// commit: this commit shows git-comment-commit extension is working!
-
 import * as vscode from 'vscode';
 import { GitCommentCommit } from './GitCommentCommit';
 

@@ -4,6 +4,35 @@ All notable changes to the "git-comment-commit" extension will be documented in 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.0.2]
+
+### Added
+
+- New setting for enabling/disabling `removeComment` added for auto remove feature
+
+### Changed
+
+- Enhanced auto remove comment feature (added in v1.0.1)
+- Extension icons changed
+
+## [1.0.1] - 2023-08-15
+
+### Added
+
+- New settings implemented (`showGitRepo`, `useLastComment`)
+- Auto comment save per file
+
+### Changed
+
+- Switched from `showInformationMessage` to `withProgress` notification
+- Extension has rewritten in terms of clean code and beauty
+
+## [1.0.0] - 2023-08-11
+
+### Added
+
+- Input and Comment mode
+
 ## [Unreleased]
 
 - Initial release
