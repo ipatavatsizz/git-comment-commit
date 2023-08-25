@@ -108,7 +108,9 @@ export class GitCommentCommit {
   async commentMode(): Promise<void> {
     let comment = await this.getComment();
     if (comment) {
-      await this.deleteComment();
+      if (ExtensionSettings.removeComment) {
+        await this.deleteComment();
+      }
       await this.commit(comment!);
       // await this.insertComment();
     }
