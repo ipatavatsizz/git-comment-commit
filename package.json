@@ -2,7 +2,7 @@
   "name": "git-comment-commit",
   "displayName": "Git Comment Commit",
   "description": "Git Comment Commit allows user to specify file specific commit using comment",
-  "version": "1.0.1",
+  "version": "2.1.1",
   "publisher": "ipatavatsizz",
   "icon": "images/icon.png",
   "repository": {
