@@ -1,3 +1,5 @@
+//TODO: Trigger commit process when file is modified!
+
 import simpleGit, { CommitResult, SimpleGit } from 'simple-git';
 import * as vscode from 'vscode';
 import { ExtensionSettings } from './GitExtensionSettings';
@@ -67,6 +69,10 @@ export class GitCommentCommit {
     this.document = event.document;
     if (this.isCommitting) {
       vscode.window.showErrorMessage('There is currently active process! Please wait soon.');
+      return;
+    } else if (!event.document.isDirty) {
+      this.console.appendLine('Skipping commit process because the active file is not modified.');
+      return;
     } else {
       if (await this.isWorkspaceFile(this.document?.uri!)) {
         await this.analyze();
