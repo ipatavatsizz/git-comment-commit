@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [2.1.1]
 
+### Added
+
+- Extension now only run when file is modified
+
 ### Changed
 
 - Switched transparent icon
