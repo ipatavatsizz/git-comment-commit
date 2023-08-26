@@ -39,6 +39,7 @@ There are currently no issues related to working properly.
 
 ### 2.1.1 (d)
 
+- Extension now only run when file is modified
 - Extension icons changed
 
 ### 2.1.0 (r)
