@@ -1,8 +1,10 @@
 # Git Comment Commit
 
-Git Comment Commit allows users to specify file specific commits using comment
+> This project has been removed from Marketplace since I share it only here. A future update is not planned until I decide to focus on this project again.
 
-> This extension only manages to add and commit files but not push
+Git Comment Commit allows users to specify file-specific commits using the comment
+
+> This extension only manages to add and commit files but does not push
 
 ## How to use?
 
